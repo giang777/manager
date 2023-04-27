@@ -1,0 +1,38 @@
+<div class="container">
+    <h1>Sửa nhân viên</h1>
+    <form action="/edit" enctype="multipart/form-data" method="POST">
+        <input type="hidden" name="id" value={{id}}>
+        <div class="mb-3">
+            <label for="exampleFormControlInput1" class="form-label">Tên nhân viên</label>
+            <input type="text" class="form-control" placeholder="Nhập tên nhân viên" name="name" required
+                value='{{name}}'>
+        </div>
+        <div class="mb-3">
+            <label for="exampleFormControlInput1" class="form-label">Điểm trung bình</label>
+            <input type="number" class="form-control" placeholder="Nhập điểm trung bình" name="mark" min="0" required
+                value={{mark}} step="any">
+        </div>
+        <div>
+            <label for="formFileLg" class="form-label">Ảnh</label>
+            <input class="form-control " id="file-input" type="file" name="file">
+        </div>
+        <img id="image-preview" src={{img}} alt="" width="150" height="150" style="margin-top: 30px; display: block;">
+        <button type="submit" class="btn btn-primary" style="margin-top: 20px;">Sửa nhân viên</button>
+    </form>
+</div>
+<script>
+
+    const fileInput = document.getElementById('file-input');
+    const imagePreview = document.getElementById('image-preview');
+
+    fileInput.addEventListener('change', () => {
+        const file = fileInput.files[0];
+        const reader = new FileReader();
+
+        reader.addEventListener('load', () => {
+            imagePreview.src = reader.result;
+        });
+
+        reader.readAsDataURL(file);
+    });
+</script>

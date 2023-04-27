@@ -1,0 +1,83 @@
+<div class="container">
+    <form action="/" enctype="multipart/form-data" method="POST">
+        <div class="mb-3">
+            <label for="exampleFormControlInput1" class="form-label">Tên nhân viên</label>
+            <input type="text" class="form-control" placeholder="Nhập tên nhân viên" name="name" required>
+        </div>
+        <div class="mb-3">
+            <label for="exampleFormControlInput1" class="form-label">Điểm trung bình</label>
+            <input type="number" class="form-control" placeholder="Nhập điểm trung bình" name="mark" min="0" required
+                step="any">
+        </div>
+        <div>
+            <label for="formFileLg" class="form-label">Ảnh</label>
+            <input class="form-control " id="formFileLg" type="file" name="file" required>
+        </div>
+        <button type="submit" class="btn btn-primary" style="margin-top: 20px;">Thêm nhân viên</button>
+    </form>
+    <div style="display: inline;float: right;margin-bottom: 20px;">
+        <form action="/search" method="GET" class="input-group">
+            <input type="search" id="form1" class="form-control" placeholder="Nhập từ khóa tìm kiếm" name="text"
+                required />
+            <button type="submit" class="btn btn-primary">
+                Tìm kiếm
+            </button>
+        </form>
+    </div>
+    <table class="table" style="margin-top: 20px;">
+        <thead>
+
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Tên</th>
+                <th scope="col">Ảnh</th>
+                <th scope="col">Điểm</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{#each list}}
+            <tr>
+                <td>
+                    {{this._id}}
+                </td>
+                <td>
+                    {{this.name}}
+                </td>
+                <td><img src={{this.img}} alt="" width=" 80" height="80"></td>
+                <td>
+                    {{this.mark}}
+                </td>
+                <td><button type="button" class="btn btn-danger" data-toggle="modal"
+                        data-target="#exampleModal{{this._id}}">Xóa</button>
+
+                    <div class="modal" id="exampleModal{{this._id}}">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h1 class="modal-title fs-5" id="exampleModalLabel">Thông Báo</h1>
+                                </div>
+                                <div class="modal-body">
+                                    Bạn có muốn xóa không
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Không</button>
+                                    <form action="/delete" method="POST">
+                                        <input type="hidden" value={{this._id}} name="id">
+                                        <button type="sumbit" class="btn btn-danger">Xóa</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </td>
+                <td>
+                    <form action="/edit" method="GET">
+                        <input type="hidden" value={{this._id}} name="id">
+                        <button type="submit" class="btn btn-success">Sửa</button>
+                    </form>
+                </td>
+            </tr>
+            {{/each}}
+        </tbody>
+    </table>
+</div>
